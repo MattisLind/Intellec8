@@ -1,10 +1,10 @@
 # Intellec8
 
-I bought this Intellec 8/80 on a fleamarked outside Stockholm 30 years ago for the equivalent of ten euros. It has been sitting on a shelf since then and now I got the inspiration to fix it. Before doing anything with this machines I dumed the [firmware](https://github.com/MattisLind/Intellec8/tree/main/EPROMImages) of the EPROMs. 16 1702 EPROM chips. Each of them containing 256 bytes of non-volatile storage. Then I dismantled the entire machine in to pieces and cleaned some 40 years of dust from it. Meanwhile I took quite a lot of photos of the various parts and puth in the [Pictures folder](https://github.com/MattisLind/Intellec8/tree/main/Pictures). 
+I bought this Intellec 8/80 on a fleamarket outside Stockholm 30 years ago for the equivalent of ten euros. It has been sitting on a shelf since then and now I got the inspiration to fix it. Before doing anything with the machine I dumed the [firmware](https://github.com/MattisLind/Intellec8/tree/main/EPROMImages) of the EPROMs. 16 1702 EPROM chips. Each of them containing 256 bytes of non-volatile storage. Then I dismantled the entire machine in to pieces and cleaned some 40 years of dust from it. Meanwhile I took quite a lot of photos of the various parts and puth in the [Pictures folder](https://github.com/MattisLind/Intellec8/tree/main/Pictures). 
 
 ![Front panel](https://raw.githubusercontent.com/MattisLind/Intellec8/main/Pictures/Frontpanel.jpg)
 
-The first thing to check were the PSU. The Intellec 8 has three PSU assemblies. One provides +5V, One provide +/- 12V and the one provide -9V and AC for the programming voltage.
+The first thing to check were the PSU. The Intellec 8 has three PSU assemblies. One provides +5V, another provide +/- 12V and the last one provide -9V and AC for the programming voltage. The -9V supply and the +/- 12V supply worked just fine.
 
 ![5V PSU](https://raw.githubusercontent.com/MattisLind/Intellec8/main/Pictures/5VPSU.JPG)
 
@@ -18,13 +18,13 @@ I checked all LEDs on the panel and they seemed to work find as did the switches
 
 ![Extender board](https://i.imgur.com/qulnBwCl.jpg)
 
-I also inclued test point so it wouuld be easier to attach a logic analyzer if that turned out to be necessary. The more test points the better. And a lot of ground points to be able to attache the ground probes of the LA.
+I also inclued test point so it would be easier to attach a logic analyzer if that turned out to be necessary. The more test points the better. And a lot of ground points to be able to attache the ground probes of the LA.
 
 A few weeks later the boards arrived and so did the connector. I choosen a wire-wrap connector which i bent the legs a bit on to make a sturdy connection between the board and the connector.
 
 ![Extender baord end front panel board in the chassis](https://i.imgur.com/Fs8Oeyml.jpg)
 
-Now I hade the possibiliy to probe around on the board. The FETCH cycle signal toggled all the time but still the LED was dark. The signal went through a 7417 OC buffer, A3. It turned out that it was allways high on the output. A low will cause the LED to be lit. A high will cause it to be turned off. Removed it and tested in my Retro Chip Tester and, yes, it tested bad. A new (date code 1971), tested, 7417 was installed and yes the front panel was a lot happier.
+Now I hade the possibiliy to probe around on the board. The FETCH cycle signal toggled all the time but still the LED was dark. The signal went through a 7417 OC buffer, A3. It turned out that it was always high on the output. A low will cause the LED to be lit. A high will cause it to be turned off. Removed it and tested in my Retro Chip Tester and, yes, it tested bad. A new (date code 1971), tested 7417, was installed and the front panel was a lot happier.
 
 I could enter a short loop at address 0 that was looping back to itself and also single step this little program. Nice!
 
