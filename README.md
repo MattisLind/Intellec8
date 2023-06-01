@@ -31,3 +31,45 @@ I could enter a short loop at address 0 that was looping back to itself and also
 But when checking the memory at 3800h where the monitor was supposed be located were very strange and did not match the content of the previouslt dumped EPROMs. Pulled out the EPROM board from the backplane and immediatelty saw something that made me suspicous. Two DIP-swicthes. I have had problmes with DIP-switches in the past. And sure enough, closed switches read open-circuit on the meter. Tried to exercise the switches. Tried deoxit, which made it worse. In the end I had to replace them and then with new swicthes in place the memory at 3800h was accessible. I could even start the monitor and saw the LED indicate I/O acces which was likely to be the monitor polling the UART for incoming character.
 
 Now I just have create a current loop adapter and test the I/O card.
+
+## Modifications to support FACIT paper tape reader and punch
+
+```
+3639                          .ORG   3639h   
+3639   3E FA        RDR:      MVI   A,0FAH   
+363B   D3 05                  OUT   5   
+363D   DB 05        RLO:      IN    5   
+363F   1F                     RAR   
+3640   1F                     RAR   
+3641   1F                     RAR   
+3642   D8                     RC   
+3643   17                     RAL   
+3644   DA 3D 36               JC    RLO   
+3647   DB 04                  IN    4   
+3649   F5                     PUSH  PSW   
+364A   3E FB                  MVI   A,0FBH   
+364C   D3 05                  OUT   5   
+364E   DB 05        RHI:      IN    5   
+3650   E6 02                  ANI   02H   
+3652   CA 4E 36               JZ    RHI   
+3655   F1                     POP   PSW   
+3656   2F                     CMA   
+3657   B7                     ORA   A   
+3658   C9                     RET   
+3659                PUNCH:    
+3659   DB 05                  IN    5   
+365B   E6 10                  ANI   010H   
+365D   C2 59 36               JNZ   PUNCH   
+3660   79                     MOV   A,C   
+3661   2F                     CMA   
+3662   D3 04                  OUT   4   
+3664   3E AF                  MVI   A,0AFH   
+3666   D3 05                  OUT   5   
+3668   DB 05        HIGH:     IN    5   
+366A   E6 10                  ANI   010H   
+366C   CA 68 36               JZ    HIGH   
+366F   3E BF                  MVI   A,0BFH   
+3671   D3 05                  OUT   5   
+3673   C9                     RET   
+```
+Jumptable-locatation at 3010 need change to 59H. 
